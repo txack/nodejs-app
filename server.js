@@ -24,11 +24,9 @@ const httpLogger = pinoHttp({ logger });
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// Variables leídas desde el entorno
-// En Kubernetes el operador EDOT inyectará automáticamente:
-//   OTEL_SERVICE_NAME, OTEL_EXPORTER_OTLP_ENDPOINT, NODE_OPTIONS, etc.
-const SERVICE_NAME = process.env.OTEL_SERVICE_NAME || 'nodejs-otel-test';
-const ENVIRONMENT   = process.env.NODE_ENV           || 'development';
+// Nombre del servicio (hardcodeado — toda la config de OTEL es responsabilidad del operador)
+const SERVICE_NAME = 'nodejs-otel-test';
+const ENVIRONMENT   = 'development';
 
 app.use(httpLogger);    // log de cada request HTTP entrante
 app.use(express.json());
