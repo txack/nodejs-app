@@ -1,0 +1,20 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: nodejs-app-route
+  namespace: nodejs-app
+spec:
+  hostnames:
+    - nodejs.lab
+  parentRefs:
+    - name: lab-gateway
+      namespace: istio-system
+      sectionName: http
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: nodejs-app-service
+          port: 80
